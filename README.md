@@ -4,13 +4,13 @@ Electrochalanes Club de Robótica PFLC
 Preparatoria Federal Lázaro Cárdenas, Tijuana, Baja California, México.
 
 ## Integrantes
-*Cano Andrade Raúl Daniel
+Cano Andrade Raúl Daniel
 
-*Jurado Hernández Marco Tonatiuh
+Jurado Hernández Marco Tonatiuh
 
-*Sotelo Montoya Seth Uriel
+Sotelo Montoya Seth Uriel
 
-*Coach: Garcia Garcia Manuel Alexis
+Coach: Garcia Garcia Manuel Alexis
 
 ## Contenido
 
