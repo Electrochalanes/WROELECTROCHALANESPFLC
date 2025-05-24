@@ -1,6 +1,4 @@
-Control software
+Código de control (Phyton)
 ====
 
-This directory must contain code for control software which is used by the vehicle to participate in the competition and which was developed by the participants.
-
-All artifacts required to resolve dependencies and build the project must be included in this directory as well.
+En esta sección se encuentran los códigos utilizados en el desafío abierto y en el desafío de obstaculos.
