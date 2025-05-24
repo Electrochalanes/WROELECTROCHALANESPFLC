@@ -4,11 +4,11 @@ Electrochalanes Club de Robótica PFLC
 Preparatoria Federal Lázaro Cárdenas, Tijuana, Baja California, México.
 
 ## Integrantes
-Cano Andrade Raúl Daniel
-Jurado Hernández Marco Tonatiuh
-Sotelo Montoya Seth Uriel
+*Cano Andrade Raúl Daniel
+*Jurado Hernández Marco Tonatiuh
+*Sotelo Montoya Seth Uriel
 
-Coach: Garcia Garcia Manuel Alexis
+*Coach: Garcia Garcia Manuel Alexis
 
 ## Contenido
 
@@ -23,14 +23,14 @@ Coach: Garcia Garcia Manuel Alexis
 
 ¿De qué manera conseguimos resolver cada uno de los desafíos de la competencia?
 Primeramente se realizó una lista de componentes electrónicos a utilizar:
-Raspberry Pi 5
-Servomotor tipo SG90 marca Steren
-Micromotorreductor Pololu HPCB 6V 75:1
-Cámara web 4k 60fps USB
-Motorshield para Raspberry Pi SB Components
-Sensor ultrasónico SR04
-Batería lipo 7.4V 400mAh
-Powerbank
+*Raspberry Pi 5
+*Servomotor tipo SG90 marca Steren
+*Micromotorreductor Pololu HPCB 6V 75:1
+*Cámara web 4k 60fps USB
+*Motorshield para Raspberry Pi SB Components
+*Sensor ultrasónico SR04
+*Batería lipo 7.4V 400mAh
+*Powerbank
 
 ## Bases del diseño
 Posterior a la selección de componentes se realizó el diseño del auto. ¿En qué se basó nuestro diseño?
@@ -40,7 +40,7 @@ La transmisión delantera es controlada por el servomotor que gira hacia la dere
 ## Funcionamiento del código del desafío abierto
 Para el desafío abierto utilizamos un código basado en las librerías:"gpiozero" y "time".
 
-Primero, al iniciar el automovil y activar el código este le da una señal al servo para mantenerse en el punto 0 (esto para que las llantas apunten recto al comienzo), posterior al acomodo este comenzará a avanzar en linea recta. La base del movimiento de nuestro auto recae en el sensor ultrasónico, este al detectar la distancia deseada envía una señal que es recibida por la placa, la cual manda la orden al servomotor de girar -49 grados, logrando así girar a la izquierda. Este proceso se repite un total de 12 veces, después de completar ese ciclo el auto se detiene dentro de la sección donde comenzó, dando así un total de 3 vueltas completas al circuito.
+*Primero, al iniciar el automovil y activar el código este le da una señal al servo para mantenerse en el punto 0 (esto para que las llantas apunten recto al comienzo), posterior al acomodo este comenzará a avanzar en linea recta. La base del movimiento de nuestro auto recae en el sensor ultrasónico, este al detectar la distancia deseada envía una señal que es recibida por la placa, la cual manda la orden al servomotor de girar -49 grados, logrando así girar a la izquierda. Este proceso se repite un total de 12 veces, después de completar ese ciclo el auto se detiene dentro de la sección donde comenzó, dando así un total de 3 vueltas completas al circuito.
 
 ## Funcionamiento del código para el desafío de obstaculos
 
