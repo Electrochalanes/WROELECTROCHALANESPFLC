@@ -5,7 +5,9 @@ Preparatoria Federal Lázaro Cárdenas, Tijuana, Baja California, México.
 
 ## Integrantes
 *Cano Andrade Raúl Daniel
+
 *Jurado Hernández Marco Tonatiuh
+
 *Sotelo Montoya Seth Uriel
 
 *Coach: Garcia Garcia Manuel Alexis
