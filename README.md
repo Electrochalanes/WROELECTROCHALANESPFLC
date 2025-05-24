@@ -21,7 +21,7 @@ Coach: Garcia Garcia Manuel Alexis
 * `src` contiene los códigos que se emplearon en todos los componentes programados para la competencia.
 * `models` aquí se encuentran los modelos 3D y los componentes cortados en láser que se utilizaron para lograr el vehículo.
 
-## Introduction
+## Introducción
 
 ¿De qué manera conseguimos resolver cada uno de los desafíos de la competencia?
 Primeramente se realizó una lista de componentes electrónicos a utilizar:
