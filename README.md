@@ -25,14 +25,14 @@ Coach: Garcia Garcia Manuel Alexis
 
 ¿De qué manera conseguimos resolver cada uno de los desafíos de la competencia?
 Primeramente se realizó una lista de componentes electrónicos a utilizar:
-*Raspberry Pi 5
-*Servomotor tipo SG90 marca Steren
-*Micromotorreductor Pololu HPCB 6V 75:1
-*Cámara web 4k 60fps USB
-*Motorshield para Raspberry Pi SB Components
-*Sensor ultrasónico SR04
-*Batería lipo 7.4V 400mAh
-*Powerbank
+* Raspberry Pi 5
+* Servomotor tipo SG90 marca Steren
+* Micromotorreductor Pololu HPCB 6V 75:1
+* Cámara web 4k 60fps USB
+* Motorshield para Raspberry Pi SB Components
+* Sensor ultrasónico SR04
+* Batería lipo 7.4V 400mAh
+* Powerbank
 
 ## Bases del diseño
 Posterior a la selección de componentes se realizó el diseño del auto. ¿En qué se basó nuestro diseño?
