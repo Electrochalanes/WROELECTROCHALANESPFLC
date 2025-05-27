@@ -1,44 +1,63 @@
 import cv2
-from gpiozero import Motor
-from gpiozero import AngularServo
+from gpiozero import Motor, AngularServo, DistanceSensor,Button
 from time import sleep
-from gpiozero import DistanceSensor
-from gpiozero import LED
 
-gpios = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,23,24,25,26,27]
-sensor = DistanceSensor(echo=6, trigger=5,  max_distance=2)
+# Inicializacion de hardware
+sensor = DistanceSensor(echo=6, trigger=5, max_distance=2)
 motor = Motor(forward=22, backward=27)
+direccion = AngularServo(18, min_pulse_width=0.5/1000, max_pulse_width=2.5/1000, frame_width=20/1000)
 
-direccion = AngularServo(18,min_pulse_width=0.5/1000,max_pulse_width=2.5/1000, frame_width=20/1000)
-#leds =[LED(pin) for pin in gpios]
 
-"""try:
-    for led in leds:
-        led.on()
-    sleep(5)
+direccion.angle = 0  # Direccion inicial
+turn_count = 0       # Contador de giros a la izquierda
+max_turns = 24       # Limite de giros
+boton_inicio = Button(17)  # GPIO 17 para el boton
+
+boton_inicio.wait_for_press()
+
+cap = cv2.VideoCapture(0)
+
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+
+actual_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+actual_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+COLOR_PARAR = {
+    "name": "verde",
+    "lower": np.array([76, 18, 255],dtype=np.uint8),
+    "upper": np.array([95, 86, 255],dtype=np.uint8)
+}
+
+try:
+    while turn_count < max_turns:
+        distance = sensor.distance
+        print(f"Distancia: {distance:.2f} m")
+        
+        if distance < 0.6:
+            while True:
+                print("Obstaculo detectado. Girando a la izquierda...")
+                direccion.angle = -50
+                motor.forward(speed=1)
+                sleep(0.45)
+                break
+            turn_count += 1
+            print(f"Giro #{turn_count}")
+        else:
+            direccion.angle = 0
+            motor.forward(speed=0.8)
+
+        sleep(0.1)
+       
+        
+    # Si se alcanzan los 13 giros, detener
+    print("Se alcanzaron 13 giros. Deteniendo el robot.")
+    motor.stop()
+    direccion.angle = 0
+
+except KeyboardInterrupt:
+    print("Interrumpido por el usuario.")
 
 finally:
-    for led in leds:
-        led.off()"""
-direccion.angle = 0
-
-while True:
-    distance = sensor.distance
-    print(f"Distancia: {distance:.2f} m")
+    motor.stop()
     direccion.angle = 0
-    if distance < 0.6:
-        while True:  
-            motor.forward(speed=0.8)
-            direccion.angle = -55
-            sleep(0.52)
-            break
-    else:
-        motor.forward(speed=0.8)
-        direccion.angle = 0
-    sleep(0.1)  
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-        direccion.angle = 0
-    sleep(0.1)  
-   #  if cv2.waitKey(1) & 0xFF == ord('q'):
-   #     break
