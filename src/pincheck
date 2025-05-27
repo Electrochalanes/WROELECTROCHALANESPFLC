@@ -1,0 +1,68 @@
+from gpiozero import LED
+from time import sleep
+
+gpios = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,23,24,25,26,27]
+
+leds =[LED(pin) for pin in gpios]
+
+try:
+    for led in leds:
+        led.on()
+    sleep(5)
+
+finally:
+    for led in leds:
+        led.off()
+"""
+
+
+from gpiozero import AngularServo
+from time import sleep
+
+direccion = AngularServo(18,min_pulse_width=0.5/1000,max_pulse_width=2.5/1000, frame_width=20/1000)
+
+try:
+    while True:
+        direccion.angle = 10
+        print("Posicion: 0")
+        sleep(1)
+
+        direccion.angle = 0
+        print("posicion: 90")
+        sleep(1)
+        
+        direccion.angle = -10
+        print("Posicion: 180")
+        sleep(1)
+        
+        direccion.angle = 0
+        print("posicion: 90")
+        sleep(1)
+
+except KeyboardInterrupt:
+    direccion.detach()
+"""
+
+"""import cv2
+import numpy as np
+
+cam=cv2.VideoCapture(0)
+ventana="Video"
+cv2.namedWindow(ventana,cv2.WINDOW_NORMAL)
+cv2.resizeWindow(ventana,720,1280)
+
+while True:
+    ret, frame= cam.read()
+    hsv=cv2.cvtColor(frame,cv2.COLOR_BGR2HSV)
+    alto, ancho = frame.shape[:2]
+    
+    print(alto,ancho)
+    
+    cv2.imshow(ventana, frame)
+    
+    salir =cv2.waitKey(1)
+    if salir == 27:
+        break
+cam.release()
+cv2.destroyAllWindows()
+"""
