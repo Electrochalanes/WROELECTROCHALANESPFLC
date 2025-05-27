@@ -1,23 +1,43 @@
+import cv2
 from gpiozero import Motor
 from gpiozero import AngularServo
 from time import sleep
 from gpiozero import DistanceSensor
+from gpiozero import LED
 
-
+gpios = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,23,24,25,26,27]
 sensor = DistanceSensor(echo=6, trigger=5,  max_distance=2)
 motor = Motor(forward=22, backward=27)
 
 direccion = AngularServo(18,min_pulse_width=0.5/1000,max_pulse_width=2.5/1000, frame_width=20/1000)
+#leds =[LED(pin) for pin in gpios]
+
+"""try:
+    for led in leds:
+        led.on()
+    sleep(5)
+
+finally:
+    for led in leds:
+        led.off()"""
+direccion.angle = 0
 
 while True:
     distance = sensor.distance
     print(f"Distancia: {distance:.2f} m")
-    if distance < 0.75:  
-        motor.forward(speed=1)
-        direccion.angle = -49
-        sleep(0.3)
+    direccion.angle = 0
+    if distance < 0.6:
+        while True:  
+            motor.forward(speed=0.8)
+            direccion.angle = -55
+            sleep(0.52)
+            break
     else:
         motor.forward(speed=0.8)
+        direccion.angle = 0
+    sleep(0.1)  
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
         direccion.angle = 0
     sleep(0.1)  
    #  if cv2.waitKey(1) & 0xFF == ord('q'):
