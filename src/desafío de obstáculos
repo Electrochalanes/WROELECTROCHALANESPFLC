@@ -1,0 +1,133 @@
+import cv2
+import numpy as np
+from gpiozero import Motor, AngularServo, DistanceSensor
+from time import sleep
+
+# Initialize hardware
+sensor = DistanceSensor(echo=6, trigger=5, max_distance=2)
+motor = Motor(forward=23, backward=24)
+direccion = AngularServo(18, min_pulse_width=0.5/1000, max_pulse_width=2.5/1000, frame_width=20/1000)
+
+# Camera setup
+cap = cv2.VideoCapture(0)
+#cap.set(cv2.CAP_PROP_FRAME_WIDTH, 680)
+#cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 420)
+
+# Color ranges (HSV format)
+COLORS = {
+    "green": {
+        "lower": np.array([50, 121, 85]),
+        "upper": np.array([100, 255, 255])
+    },
+    "red": {
+        "lower": np.array([151, 134, 94]),
+        "upper": np.array([255, 255, 255])
+    }
+}
+
+# angulos para las direcciones
+ANGULO_DERECHA = 50
+ANGULO_IZQUIERDA = -50
+ANGULO_DERECHA2 = 85
+ANGULO_IZQUIERDA2 = -85
+ANGULO_CENTRO = 0
+
+
+try:
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+            
+        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        
+        # Create masks for each color
+        masks = {}
+        for color_name, color_range in COLORS.items():
+            masks[color_name] = cv2.inRange(hsv, color_range["lower"], color_range["upper"])
+        
+        # Get distance from ultrasonic sensor (convert to cm)
+        DISTANCE_CM = sensor.distance * 100
+        
+        # Detection flags
+        green_detected = cv2.countNonZero(masks["green"]) > 1000
+        red_detected = cv2.countNonZero(masks["red"]) > 1000
+        any_color_detected = green_detected or red_detected
+        
+        # 1. Comportamiento cuando detecta rojo y distancia < 20 cm
+        if red_detected and DISTANCE_CM < 60:
+            print("Objeto rojo cercano - Girando ligeramente a la derecha")
+            motor.forward(speed=0.6)  # Velocidad reducida
+            direccion.angle = ANGULO_DERECHA  # Gira a la derecha
+            sleep(0.5)  # Mantiene el giro por 0.5 segundos
+            motor.forward(speed=0.6)  # Velocidad reducida
+            direccion.angle = ANGULO_IZQUIERDA  # Gira a la derecha
+            sleep(1.2) 
+            direccion.angle = ANGULO_CENTRO  # Vuelve al centro
+            sleep(0.3)  # Pequena pausa
+            motor.stop()
+            sleep(0.5)    
+        
+            
+            
+        elif green_detected and DISTANCE_CM < 60:
+            print("Objeto rojo cercano - Girando ligeramente a la derecha")
+        
+            motor.forward(speed=0.6)  # Velocidad reducida 
+            direccion.angle = ANGULO_IZQUIERDA  # Gira a la derecha
+            sleep(0.5)  # Mantiene el giro por 0.5 segundos
+            motor.forward(speed=0.6)  # Velocidad reducida
+            direccion.angle = ANGULO_DERECHA  # Gira a la derecha
+            sleep(1.2) 
+            direccion.angle = ANGULO_CENTRO  # Vuelve al centro
+            sleep(0.3)  # Pequena pausa
+            motor.stop()
+            sleep(0.5)
+
+        
+        # 2. Comportamiento cuando no detecta color y hay pared a 70 cm
+        elif not any_color_detected and  DISTANCE_CM < 70:  # Margen de 15 cm
+            print("Pared a 70 cm sin colores - Giro de 90 a la izquierda")
+            #motor.stop()  # Detiene el motor
+            direccion.angle = ANGULO_IZQUIERDA2
+            # Gira completamente a la izquierda
+           # sleep(1.0)  # Tiempo para girar 90 grados (ajustar segun tu robot)
+            motor.forward(speed=.7)  # Avanza despues del giro
+            sleep(2)
+            direccion.angle = ANGULO_CENTRO
+            motor.stop()  # Vuelve al centro
+            sleep(0.5)
+            
+        
+        # Comportamiento por defecto
+        else:
+                motor.forward(speed=0.6)
+                direccion.angle = ANGULO_CENTRO
+         
+        # Mostrar informacion de depuracion
+        cv2.putText(frame, f"Distancia: {DISTANCE_CM:.1f} cm", (10, 30), 
+                   cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+        cv2.putText(frame, f"Rojo: {red_detected} | Verde: {green_detected}", (10, 60), 
+                   cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+        
+        cv2.imshow('Camera Feed', frame)
+
+        
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+            
+        sleep(0.1)  # Pequena pausa para reducir carga de CPU
+            
+finally:
+    motor.stop()
+    direccion.angle = ANGULO_CENTRO  # Centra el servo al finalizar
+    motor.close()
+    cap.release()
+    cv2.destroyAllWindows()
+
+
+# Esperar a que se presione el botón
+print("Esperando a que se presione el botón para iniciar...")
+start_button.wait_for_press()
+print("Botón presionado! Iniciando programa...")
+main_program()
