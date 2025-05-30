@@ -36,7 +36,7 @@ try:
         sleep(0.1)
        
         
-    # Si se alcanzan los 13 giros, detener
+    # Si se alcanzan los 13 giros, detener, tecnicamente son 4 giros pero cuento de 2 a 3 veces por giro, es un estimado
     print("Se alcanzaron 13 giros. Deteniendo el robot.")
     motor.stop()
     direccion.angle = 0
