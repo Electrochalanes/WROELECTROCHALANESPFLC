@@ -4,14 +4,15 @@ from time import sleep
 
 # Inicializacion de hardware
 sensor = DistanceSensor(echo=6, trigger=5, max_distance=2)
-motor = Motor(forward=22, backward=27)
+motor = Motor(forward=23, backward=24)
 direccion = AngularServo(18, min_pulse_width=0.5/1000, max_pulse_width=2.5/1000, frame_width=20/1000)
 
 
 direccion.angle = 0  # Direccion inicial
+Dirrecccion = -50# negativo izquierda positivo derecha
 turn_count = 0       # Contador de giros a la izquierda
-max_turns = 24       # Limite de giros
-boton_inicio = Button(17)  # GPIO 17 para el boton
+max_turns = 12       # Limite de giros
+boton_inicio = Button(27)  # GPIO 17 para el boton
 
 boton_inicio.wait_for_press()
 
@@ -20,24 +21,29 @@ try:
         distance = sensor.distance
         print(f"Distancia: {distance:.2f} m")
         
-        if distance < 0.6:
+        if distance < 0.75:
             while True:
                 print("Obstaculo detectado. Girando a la izquierda...")
-                direccion.angle = -50
+                direccion.angle = Dirrecccion
                 motor.forward(speed=1)
-                sleep(0.45)
+                sleep(0.48)
+            
                 break
             turn_count += 1
             print(f"Giro #{turn_count}")
+            sleep(0.5)
         else:
-            direccion.angle = 0
+            direccion.angle = 3
             motor.forward(speed=0.8)
 
         sleep(0.1)
-       
+    
         
     # Si se alcanzan los 13 giros, detener, tecnicamente son 4 giros pero cuento de 2 a 3 veces por giro, es un estimado
     print("Se alcanzaron 13 giros. Deteniendo el robot.")
+    direccion.angle = 3
+    motor.forward(speed=1)
+    sleep(0.6)
     motor.stop()
     direccion.angle = 0
 
@@ -46,4 +52,4 @@ except KeyboardInterrupt:
 
 finally:
     motor.stop()
-    direccion.angle = 0
+    
